@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Sederhana</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .form-container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        label {
+            margin-top: 10px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 95%;
+            padding: 8px;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .radio-group input[type="radio"] {
+            width: auto;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
+        .radio-group label {
+            display: inline-block;
+            margin-right: 12px;
+        }
+
+        #hobi-lain {
+            display: none;
+        }
+
+        input[type="submit"] {
+            background: green;
+            color: white;
+            cursor: pointer;
+        }
+
+        table {
+            width: 95%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Formulir Data Mahasiswa</h2>
+        <form id="formMhs">
+
+            <label>NIM :</label>
+            <input type="text" id="NIM" required>
+
+            <label>Nama :</label>
+            <input type="text" id="Nama" required>
+
+            <label>Gender :</label>
+            <div class="radio-group">
+                <label><input type="radio" name="Gender" value="Laki-laki" required> Laki-laki</label>
+                <label><input type="radio" name="Gender" value="Perempuan" required> Perempuan</label>
+            </div>
+
+            <label>Tempat Lahir :</label>
+            <select id="TempatLahir" required>
+                <option value="Denpasar">Denpasar</option>
+                <option value="Badung">Badung</option>
+                <option value="Gianyar">Gianyar</option>
+                <option value="Tabanan">Tabanan</option>
+                <option value="Jembrana">Jembrana</option>
+                <option value="Buleleng">Buleleng</option>
+                <option value="Bangli">Bangli</option>
+                <option value="Klungkung">Klungkung</option>
+                <option value="Lainnya">Lainnya</option>
+            </select>
+
+            <label>Tanggal Lahir :</label>
+            <input type="date" id="TglLahir" required>
+
+            <label>Alamat :</label>
+            <input type="text" id="Alamat" required>
+
+            <label>No. HP :</label>
+            <input type="text" id="NoHp" required>
+
+            <label>Email :</label>
+            <input type="email" id="Email" required>
+
+            <label>Hobi :</label>
+            <select id="Hobi" required>
+                <option value="">--Pilih--</option>
+                <option value="Masak">Masak</option>
+                <option value="Renang">Renang</option>
+                <option value="Membaca">Membaca</option>
+                <option value="Menulis">Menulis</option>
+                <option value="Traveling">Traveling</option>
+                <option value="Lainnya">Lainnya</option>
+            </select>
+
+            <div id="hobi-lain">
+                <input type="text" id="HobiLain" placeholder="Sebutkan Hobi Lain">
+            </div>
+
+            <input type="submit" value="Kirim">
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>NIM</th>
+                <th>Nama</th>
+                <th>Gender</th>
+                <th>Tempat Lahir</th>
+                <th>Tanggal Lahir</th>
+                <th>Alamat</th>
+                <th>No HP</th>
+                <th>Email</th>
+                <th>Hobi</th>
+            </tr>
+        </thead>
+        <tbody id="tabelData"></tbody>
+    </table>
+
+    <script>
+        let no = 1;
+        const form = document.getElementById('formMhs');
+        const tabel = document.getElementById('tabelData');
+
+        document.getElementById('Hobi').addEventListener('change', function(){
+            if(this.value === "Lainnya"){
+                document.getElementById('hobi-lain').style.display = "block";
+            } else {
+                document.getElementById('hobi-lain').style.display = "none";
+                document.getElementById('HobiLain').value = "";
+            }
+        });
+
+        form.addEventListener('submit', function(e){
+            e.preventDefault();
+
+            let hobi = document.getElementById('Hobi').value;
+            if(hobi === "Lainnya"){
+                hobi = document.getElementById('HobiLain').value;
+            }
+
+            const row = tabel.insertRow();
+            row.insertCell(0).innerHTML = no++;
+            row.insertCell(1).innerHTML = document.getElementById('NIM').value;
+            row.insertCell(2).innerHTML = document.getElementById('Nama').value;
+            row.insertCell(3).innerHTML = document.querySelector('input[name="Gender"]:checked').value;
+            row.insertCell(4).innerHTML = document.getElementById('TempatLahir').value;
+            row.insertCell(5).innerHTML = document.getElementById('TglLahir').value;
+            row.insertCell(6).innerHTML = document.getElementById('Alamat').value;
+            row.insertCell(7).innerHTML = document.getElementById('NoHp').value;
+            row.insertCell(8).innerHTML = document.getElementById('Email').value;
+            row.insertCell(9).innerHTML = hobi;
+
+            form.reset();
+            document.getElementById('hobi-lain').style.display = "none";
+        });
+    </script>
+
+</body>
+</html>
